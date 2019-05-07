@@ -14,10 +14,12 @@ IN3 = 12, IN4 = 13
 
 #include <IRremote.h>
 
+//M1:
 #define IN1 8
 #define IN2 9
 #define EN1 10
 
+//M2:
 #define IN3 12
 #define IN4 13
 #define EN2 11
@@ -37,13 +39,16 @@ char bwd[9] = "Backward";
 char left[5] = "Left";
 char right[6] = "Right";
 
-void change_direc (bool direct, int motor_num_) {
-  if ((direct == HIGH or direct == LOW) && motor_num_ == 1) {
+int hold = 0xFFFFFFFF;
+volatile int temp_read = 0;
+
+void change_direc (bool direct, char direc_[]) {
+  if ((direct == HIGH or direct == LOW) && direc_ == "Forward") {
     digitalWrite(IN1, direct);
     digitalWrite(IN2, !direct);
   }
 
-  else if ((direct == HIGH or direct == LOW) && motor_num_ == 2) {
+  else if ((direct == HIGH or direct == LOW) && direc_ == "Backward") {
     digitalWrite(IN3, direct);
     digitalWrite(IN4, !direct);
   }
@@ -51,18 +56,18 @@ void change_direc (bool direct, int motor_num_) {
 
 
 
-void run_motors (int speed_, char direc[], int motor_num) {
+void run_motors (int speed_, char direc[]) {
   analogWrite(EN1, speed_);
   analogWrite(EN2, speed_);
 
   if (direc == "Forward") {
     Serial.println("  fwd active  ");
-    change_direc(HIGH, motor_num); //forward
+    change_direc(HIGH, direc); //forward
   }
 
   else if (direc == "Backward") {
     Serial.println("  bwd active  ");
-    change_direc(LOW, motor_num); //backward
+    change_direc(LOW, direc); //backward
 
   }
 
@@ -97,6 +102,8 @@ void loop(){
 //      irrecv.resume();
 //      delay(250);
 //  }
+
+
    
   int* speed = in_speed;
   if ((in_speed <= 255) && (in_speed >= 0) ){
@@ -109,17 +116,21 @@ void loop(){
   }
   
   if (results.value == 0x20DF02FD) {
-    run_motors(&speed, fwd, 1);
+    temp_read = results.value;
+    if ( (temp_read == hold) || (temp_read = 0)){
+      run_motors(&speed, fwd);
+    }
+    temp_read = 0;
   }
   else if (results.value == 0x20DF609F) {
-    run_motors(&speed, bwd, 1);
+    run_motors(&speed, bwd);
   }
 
-  if (results.value == 0x20DFE01F ) {
+  if (results.value == 0x20DFE01F) {
     motor_off(&speed, left);
   }
 
-  else if (results.value == 0x20DF827D ) {
+  else if (results.value == 0x20DF827D) {
     motor_off(&speed, right);
   }
     
