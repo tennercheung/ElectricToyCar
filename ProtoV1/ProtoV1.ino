@@ -49,13 +49,11 @@ void change_direc (bool direct, int motor_num_) {
   }
 }
 
-void turn_motors (int speed, char direc[]) {
 
-}
 
-void run_motors (int speed, char direc[], int motor_num) {
-  analogWrite(EN1, speed);
-  analogWrite(EN2, speed);
+void run_motors (int speed_, char direc[], int motor_num) {
+  analogWrite(EN1, speed_);
+  analogWrite(EN2, speed_);
 
   if (direc == "Forward") {
     Serial.println("  fwd active  ");
@@ -100,7 +98,7 @@ void loop(){
 //      delay(250);
 //  }
    
-  int speed = in_speed;
+  int* speed = in_speed;
   if ((in_speed <= 255) && (in_speed >= 0) ){
     if (results.value == 0x20DF40BF){
       in_speed + 5 ;
@@ -111,24 +109,19 @@ void loop(){
   }
   
   if (results.value == 0x20DF02FD) {
-    run_motors(in_speed, fwd, 1);
+    run_motors(&speed, fwd, 1);
   }
   else if (results.value == 0x20DF609F) {
-    run_motors(in_speed, bwd, 1);
+    run_motors(&speed, bwd, 1);
   }
 
   if (results.value == 0x20DFE01F ) {
-    motor_off(in_speed, left);
+    motor_off(&speed, left);
   }
 
   else if (results.value == 0x20DF827D ) {
-    motor_off(in_speed, right);
+    motor_off(&speed, right);
   }
-  
-  
-
-  
-
-  
+    
   irrecv.resume();
 }
