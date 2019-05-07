@@ -13,35 +13,52 @@ IN3 = 12, IN4 = 13
 
 #include <IRremote.h>
 
+#define IN1 8
+#define IN2 9
+#define EN1 10
+
+#define IN3 12
+#define IN4 13
+#define EN2 11
+
 const int RECV_PIN = 2;
 IRrecv irrecv(RECV_PIN);
 decode_results results;
 
-void change_direc (bool direct) {
-  if (direct == HIGH or direct == LOW) {
-    digitalWrite(in1Pin, direct);
-    digitalWrite(in2Pin, !direct);
+
+
+void change_direc (bool direct, int motor_num) {
+  if ((direct == HIGH or direct == LOW) && motor_num == 1) {
+    digitalWrite(IN1, direct);
+    digitalWrite(IN2, !direct);
+  }
+
+  else if ((direct == HIGH or direct == LOW) && motor_num == 2) {
+    digitalWrite(IN3, direct);
+    digitalWrite(IN4, !direct);
   }
 }
 
 void run_motors (int speed, char direc[], int movement) {
-  analogWrite(enablePin, speed);
+  analogWrite(EN1, speed);
+  analogWrite(EN2, speed);
 
   if (movement == 25) {
     Serial.println("  fwd active  ");
-    change_direc(HIGH); //forward
+    change_direc(HIGH, 1); //forward
   }
 
   else if (movement == 50) {
     Serial.println("  bwd active  ");
-    change_direc(LOW); //backward
+    change_direc(LOW, 1); //backward
 
   }
 
 }
 
 void motor_off (char direc[]) {
-  analogWrite(enablePin, 0);
+  analogWrite(EN1, 0);
+  analogWrite(EN2, 0);
 }
 
 void setup(){
@@ -56,6 +73,7 @@ void loop(){
         irrecv.resume();
         delay(250);
   }
+
 
   
 }
