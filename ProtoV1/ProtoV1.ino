@@ -34,6 +34,8 @@ int in_speed = 0;
 
 char fwd[8] = "Forward";
 char bwd[9] = "Backward";
+char left[5] = "Left";
+char right[6] = "Right";
 
 void change_direc (bool direct, int motor_num_) {
   if ((direct == HIGH or direct == LOW) && motor_num_ == 1) {
@@ -45,6 +47,10 @@ void change_direc (bool direct, int motor_num_) {
     digitalWrite(IN3, direct);
     digitalWrite(IN4, !direct);
   }
+}
+
+void turn_motors (int speed, char direc[]) {
+
 }
 
 void run_motors (int speed, char direc[], int motor_num) {
@@ -64,9 +70,21 @@ void run_motors (int speed, char direc[], int motor_num) {
 
 }
 
-void motor_off (char direc[]) {
-  analogWrite(EN1, 0);
-  analogWrite(EN2, 0);
+void motor_off (int speed, char direc[]) {
+  if (direc == "Left") {
+    analogWrite(EN1, speed/2);
+    analogWrite(EN2, 0);
+  }
+
+  else if (direc == "Right") {
+    analogWrite(EN1, 0);
+    analogWrite(EN2, speed/2);
+  }
+  
+  else {
+    analogWrite(EN1, 0);
+    analogWrite(EN2, 0);
+  }
 }
 
 void setup(){
@@ -99,9 +117,17 @@ void loop(){
     run_motors(in_speed, bwd, 1);
   }
 
-  20DFE01F
+  if (results.value == 0x20DFE01F ) {
+    motor_off(in_speed, left);
+  }
 
-  20DF827D
+  else if (results.value == 0x20DF827D ) {
+    motor_off(in_speed, right);
+  }
+  
+  
+
+  
 
   
   irrecv.resume();
