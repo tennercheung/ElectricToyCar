@@ -4,6 +4,7 @@
 
 Code implemented with intent to test control with IR and on-board user controls of the vehicle
 
+
 Encountered Issues:
 * IR controls send different hex code stead FFFFFF when held in testing
 
@@ -20,5 +21,9 @@ Encountered Issues:
 ## ProtoV2
 
 ..
+
+Useful Links:
+7A/160W L298 Motor Board (https://amzn.to/2WCc6RT)
+LM2596 DC-DC Step Down Buck Converter(https://bit.ly/2JCi5m3)
 
 
