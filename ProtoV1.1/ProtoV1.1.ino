@@ -42,19 +42,14 @@ IN3 = 12, IN4 = 13
 
 
 
-void change_direc (bool direct, int direc__) {
-  if ((direct == HIGH || direct == LOW) && direc__ == 1) {
+void change_direc (bool direct) {
+  if ((direct == HIGH || direct == LOW)) {
 
-     
+
     digitalWrite(IN1, !direct);
     digitalWrite(IN2, direct);
-  }
-
-  else if ((direct == HIGH || direct == LOW) && direc__ == 2) {
-    
-
-    digitalWrite(IN3, direct);
-    digitalWrite(IN4, !direct);
+    digitalWrite(IN3, !direct);
+    digitalWrite(IN4, direct);
   }
 }
 
@@ -67,13 +62,13 @@ void run_motors (int speed, int direc) {
   if (direc == 1) {
     Serial.println("  fwd active  ");
    Serial.print(speed);
-    change_direc(HIGH, direc); //forward
+    change_direc(HIGH); //forward
   }
 
   else if (direc == 2) {
     Serial.println("  bwd active  ");
         Serial.print(speed);
-    change_direc(LOW, direc); //backward
+    change_direc(LOW); //backward
 
   }
 
