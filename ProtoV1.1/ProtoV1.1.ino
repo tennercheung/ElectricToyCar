@@ -31,6 +31,12 @@ IN3 = 12, IN4 = 13
 
 #define POTPIN 0
 
+#define FORWARD 1
+#define BACKWARD 2
+#define RIGHT 3
+#define LEFT 4
+
+
 //boolean override = false;
 
 //const int RECV_PIN = 2;
@@ -77,14 +83,14 @@ void run_motors (int speed, int direc) {
 void motor_off (int speed, int direc_) {
   if (direc_ == 3) {
     Serial.println("  left active  ");
-    analogWrite(EN1, speed/2);
+    analogWrite(EN1, speed/4);
     analogWrite(EN2, 0);
   }
 
   else if (direc_ == 4) {
     Serial.println("  right active  ");
     analogWrite(EN1, 0);
-    analogWrite(EN2, speed/2);
+    analogWrite(EN2, speed/4);
   }
   
   else {
@@ -121,21 +127,22 @@ void loop(){
   Serial.print("Bu4:");Serial.println(Bu4);
 
   Serial.print("speed:");Serial.println(speed);
+
   
   if ( Bu1 == HIGH) { // run fwd
-      run_motors(speed, 1);
+      run_motors(speed, FORWARD);
   }
   
   else if (Bu2 == HIGH) { // run back
-    run_motors(speed, 2);
+    run_motors(speed, BACKWARD);
   }
 
   if ( Bu3 == HIGH) { // run right
-    motor_off(speed, 3);
+    motor_off(speed, RIGHT);
   }
 
   else if ( Bu4 == HIGH) { // run left
-    motor_off(speed, 4);
+    motor_off(speed, LEFT);
   }
 
   else { //run idle
