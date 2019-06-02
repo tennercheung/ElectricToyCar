@@ -2,8 +2,10 @@
 
 ## Schematics
 
+Motors
 ![Alt Text](https://github.com/tennercheung/ElectricToyCar/blob/master/Schematics/Motors.jpg)
 ![Alt Text](https://github.com/tennercheung/ElectricToyCar/blob/master/Schematics/Motor_close_up.jpg)
+Dashboard PCB
 ![Alt Text](https://github.com/tennercheung/ElectricToyCar/blob/master/Schematics/Dash_zoomed.jpg)
 ![Alt Text](https://github.com/tennercheung/ElectricToyCar/blob/master/Schematics/Dash.jpg)
 ![Alt Text](https://github.com/tennercheung/ElectricToyCar/blob/master/Schematics/Dash2.jpg)
