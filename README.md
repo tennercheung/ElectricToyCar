@@ -25,8 +25,8 @@ Code implemented with intent to just the rider’s controls of the vehicle (spee
 Encountered Issues:
 * Motors shaking/jittery in fwd & bwd = PWM given to motor needs to start from low value so motors have time to speed up
 * Motors run smoother independently -> since they are lower speeds there is less time needed to speed up
+* When Arduino is reset, M2 is given power due to unallocated states of pins = since connected to LED takes a high during reset, reallocated pin 13 to pin 7
 
-* When Arduino is reset, M2 is given power due to unallocated states of pins
 * Multiple buttons touched should keep system idle but instead triggers one/a mix of the button’s functions
 
 ## ProtoV2
