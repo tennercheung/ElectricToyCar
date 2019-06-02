@@ -21,7 +21,7 @@ IN3 = 12, IN4 = 13
 
 //M2:
 #define IN3 12
-#define IN4 13
+#define IN4 7 //13
 #define EN2 11
 
 #define B1_PIN 3
@@ -137,7 +137,7 @@ void loop(){
     run_motors(speed, BACKWARD);
   }
 
-  if ( Bu3 == HIGH) { // run right
+  else if ( Bu3 == HIGH) { // run right
     motor_off(speed, RIGHT);
   }
 
