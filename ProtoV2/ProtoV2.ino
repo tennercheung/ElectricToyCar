@@ -35,11 +35,10 @@
 #define CH2 A2
 #define POTPIN A0
 
-int speed = 255 / 4;
+int speed = 255 / 4 ;
 
 int ch1;
 int ch2;
-int ch3;
 
 int steerval;    // variable to read the value from the analog pin
 
@@ -62,13 +61,11 @@ void run_motors (int speed, int direc) {
 
   if (direc == 1) {
     Serial.println("  fwd active  ");
-    Serial.print(speed);
     change_direc(HIGH); //forward
   }
 
   else if (direc == 2) {
     Serial.println("  bwd active  ");
-    Serial.print(speed);
     change_direc(LOW); //backward
 
   }
@@ -118,27 +115,29 @@ void loop() {
 
   int steermap = map((analogRead(POTPIN)), 0, 1023, 0, 180); // scale it to use it with the servo (value between 0 and 180)
   steerval = analogRead(POTPIN);
-  //Serial.print("Bu1:");Serial.print(Bu1); Serial.print("  Bu2:");Serial.println(Bu2);
+  //  Serial.print("Bu1:");Serial.print(Bu1);
+  //  Serial.print("  Bu2:");Serial.println(Bu2);
 
-  //  Serial.print("Chan 1:"); Serial.print(ch1); Serial.print("  Chan 2:"); Serial.println(ch2);
-  Serial.print("angle"); Serial.println(steerval);
+  //  Serial.print("Chan 1:"); Serial.print(ch1);
+  Serial.print("  Chan 2:"); Serial.println(ch2);
+  //  Serial.print("angle"); Serial.println(steerval);
 
-  //  if (ch2 > 1400) {
-  //    run_motors(speed, FORWARD);
-  //  }
-  //  else if (Bu1 == HIGH) { // run fwd
-  //    run_motors(speed, FORWARD);
-  //  }
-  //
-  //  if (ch2 < 1400 ) {
-  //    run_motors(speed, BACKWARD);
-  //  }
-  //  else if (Bu2 == HIGH) { // run back
-  //    run_motors(speed, BACKWARD);
-  //  }
-  //  else { //run idle
-  //    motor_off();
-  //  }
+  if (ch2 > 2010) {
+    run_motors(speed, FORWARD);
+  }
+  //    else if (Bu1 == HIGH) { // run fwd
+  //      run_motors(speed, FORWARD);
+  //    }
+
+  else if (ch2 < 1400 and ch2 !=0) {
+    run_motors(speed, BACKWARD);
+  }
+  //    else if (Bu2 == HIGH) { // run back
+  //      run_motors(speed, BACKWARD);
+  //    }
+  else { //run idle
+    motor_off();
+  }
 
   if (( (ch1 < 1677) or (ch1 > 1725) ) and (ch1 != 0)) {
     if (ch1 > 1810) {
