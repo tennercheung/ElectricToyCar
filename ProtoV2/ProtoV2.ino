@@ -1,14 +1,14 @@
 // Servo library
 #include <Servo.h>
 
-/* 
-  
-M1:
-IN1 = 8, IN2 = 9
-EN1 = 10
-M2:
-EN2 = 11
-IN3 = 12, IN4 = 7
+/*
+
+  M1:
+  IN1 = 8, IN2 = 9
+  EN1 = 10
+  M2:
+  EN2 = 11
+  IN3 = 12, IN4 = 7
 */
 
 //M1:
@@ -18,7 +18,7 @@ IN3 = 12, IN4 = 7
 
 //M2:
 #define IN3 12
-#define IN4 7 
+#define IN4 7
 #define EN2 11
 
 #define B1_PIN 3
@@ -35,9 +35,9 @@ IN3 = 12, IN4 = 7
 #define CH2 A2
 #define POTPIN A0
 
-int speed = 255/4;
+int speed = 255 / 4;
 
-int ch1; 
+int ch1;
 int ch2;
 int ch3;
 
@@ -62,13 +62,13 @@ void run_motors (int speed, int direc) {
 
   if (direc == 1) {
     Serial.println("  fwd active  ");
-   Serial.print(speed);
+    Serial.print(speed);
     change_direc(HIGH); //forward
   }
 
   else if (direc == 2) {
     Serial.println("  bwd active  ");
-        Serial.print(speed);
+    Serial.print(speed);
     change_direc(LOW); //backward
 
   }
@@ -76,89 +76,91 @@ void run_motors (int speed, int direc) {
 }
 
 void motor_off () {
-  
 
-    analogWrite(EN1, 0);
-    analogWrite(EN2, 0);
+
+  analogWrite(EN1, 0);
+  analogWrite(EN2, 0);
 
 }
 
 void servo_time () {
-    for( int a = 0; a < 15; ++a ) {  
-  // waits for the servo to get there
+  for ( int a = 0; a < 255; ++a ) {
+    // waits for the servo to get there
   }
 }
 
-void setup(){
+void setup() {
   Serial.begin(9600); // Pour a bowl of Serial
-  
+
   pinMode(IN1, OUTPUT);
   pinMode(IN2, OUTPUT);
   pinMode(EN1, OUTPUT);
-  
+
   pinMode(IN3, OUTPUT);
   pinMode(IN4, OUTPUT);
   pinMode(EN2, OUTPUT);
-  
-  pinMode(CH1, INPUT); 
+
+  pinMode(CH1, INPUT);
   pinMode(CH2, INPUT);
-  
+
   steer.attach(STEER);  // attaches the servo on pin 9 to the servo object
-   steer.write(90);
+  steer.write(90);
 }
 
-void loop(){
+void loop() {
 
   boolean Bu1 = digitalRead(B1_PIN);
   boolean Bu2 = digitalRead(B2_PIN);
 
   ch1 = pulseIn(CH1, HIGH, 25000);
-  
-delay(12);  ch2 = pulseIn(CH2, HIGH, 25000); 
-  
-  steerval = analogRead(POTPIN);   // reads the value of the potentiometer (value between 0 and 1023)
-  steerval = map(steerval, 0, 1023, 0, 180); // scale it to use it with the servo (value between 0 and 180)
 
+  delay(12);  ch2 = pulseIn(CH2, HIGH, 25000);
+
+  int steermap = map((analogRead(POTPIN)), 0, 1023, 0, 180); // scale it to use it with the servo (value between 0 and 180)
+  steerval = analogRead(POTPIN);
   //Serial.print("Bu1:");Serial.print(Bu1); Serial.print("  Bu2:");Serial.println(Bu2);
 
-  Serial.print("Chan 1:");Serial.print(ch1); Serial.print("  Chan 2:");Serial.println(ch2);
-  
-//  if (ch2 > 1400) {
-//    run_motors(speed, FORWARD);
-//  }
-//  else if (Bu1 == HIGH) { // run fwd
-//    run_motors(speed, FORWARD);
-//  }
-//  
-//  if (ch2 < 1400 ) {
-//    run_motors(speed, BACKWARD);
-//  }
-//  else if (Bu2 == HIGH) { // run back
-//    run_motors(speed, BACKWARD);
-//  }
-//  else { //run idle
-//    motor_off();
-//  }
-  
-  if (((ch1 < 1677) or (ch1 > 1725) )and ch1 != 0) {
-    if (ch1 > 1810){
-    steer.write(0);
+  //  Serial.print("Chan 1:"); Serial.print(ch1); Serial.print("  Chan 2:"); Serial.println(ch2);
+  Serial.print("angle"); Serial.println(steerval);
+
+  //  if (ch2 > 1400) {
+  //    run_motors(speed, FORWARD);
+  //  }
+  //  else if (Bu1 == HIGH) { // run fwd
+  //    run_motors(speed, FORWARD);
+  //  }
+  //
+  //  if (ch2 < 1400 ) {
+  //    run_motors(speed, BACKWARD);
+  //  }
+  //  else if (Bu2 == HIGH) { // run back
+  //    run_motors(speed, BACKWARD);
+  //  }
+  //  else { //run idle
+  //    motor_off();
+  //  }
+
+  if (( (ch1 < 1677) or (ch1 > 1725) ) and (ch1 != 0)) {
+    if (ch1 > 1810) {
+      steer.write(0);
     }
-    else if (ch1 <1470){
-    steer.write(180);  
+    else if (ch1 < 1470) {
+      steer.write(180);
     }
-    else{
-        steer.write(90);
+    else {
+      steer.write(90);
     }
   }
-    
+
+  else if ((steermap < 70 or steermap > 120) and ((ch1 > 1677) or (ch1 < 1725))) {
+    if (steerval > 700) {
+      steer.write(0);
+    }
+    else if (steerval < 300) {
+      steer.write(180);
+    }
+    else {
+      steer.write(90);
+    }
   }
-  
-//  else if (analogRead(POTPIN) < 450 or analogRead(POTPIN) > 575) {
-//    steer.write(steerval);  // sets the servo position according to the scaled value
-//    servo_time();
-//  }
-
-   
-
-  
+}
