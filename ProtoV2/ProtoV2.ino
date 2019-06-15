@@ -21,10 +21,10 @@ IN3 = 12, IN4 = 7
 #define IN4 7 
 #define EN2 11
 
-#define B1_PIN 2
-#define B2_PIN 3
+#define B1_PIN 3
+#define B2_PIN 4
 
-#define STEER 4
+#define STEER 6
 
 #define FORWARD 1
 #define BACKWARD 2
@@ -33,7 +33,7 @@ IN3 = 12, IN4 = 7
 
 #define CH1 A1
 #define CH2 A2
-#define POTPIN 3
+#define POTPIN A0
 
 int speed = 255/4;
 
@@ -77,10 +77,10 @@ void run_motors (int speed, int direc) {
 
 void motor_off () {
   
-  else {
+
     analogWrite(EN1, 0);
     analogWrite(EN2, 0);
-  }
+
 }
 
 void servo_time () {
@@ -104,52 +104,61 @@ void setup(){
   pinMode(CH2, INPUT);
   
   steer.attach(STEER);  // attaches the servo on pin 9 to the servo object
-  
+   steer.write(90);
 }
 
 void loop(){
 
   boolean Bu1 = digitalRead(B1_PIN);
   boolean Bu2 = digitalRead(B2_PIN);
-  
+
   ch1 = pulseIn(CH1, HIGH, 25000);
-  servo_time();
-  ch2 = pulseIn(CH2, HIGH, 25000); 
+  
+delay(12);  ch2 = pulseIn(CH2, HIGH, 25000); 
   
   steerval = analogRead(POTPIN);   // reads the value of the potentiometer (value between 0 and 1023)
   steerval = map(steerval, 0, 1023, 0, 180); // scale it to use it with the servo (value between 0 and 180)
 
-  Serial.print("Bu1:");Serial.print(Bu1); Serial.print("  Bu2:");Serial.println(Bu2);
+  //Serial.print("Bu1:");Serial.print(Bu1); Serial.print("  Bu2:");Serial.println(Bu2);
 
   Serial.print("Chan 1:");Serial.print(ch1); Serial.print("  Chan 2:");Serial.println(ch2);
   
-  if (ch1 > 1400) {
-    run_motors(speed, FORWARD);
+//  if (ch2 > 1400) {
+//    run_motors(speed, FORWARD);
+//  }
+//  else if (Bu1 == HIGH) { // run fwd
+//    run_motors(speed, FORWARD);
+//  }
+//  
+//  if (ch2 < 1400 ) {
+//    run_motors(speed, BACKWARD);
+//  }
+//  else if (Bu2 == HIGH) { // run back
+//    run_motors(speed, BACKWARD);
+//  }
+//  else { //run idle
+//    motor_off();
+//  }
+  
+  if (((ch1 < 1677) or (ch1 > 1725) )and ch1 != 0) {
+    if (ch1 > 1810){
+    steer.write(0);
+    }
+    else if (ch1 <1470){
+    steer.write(180);  
+    }
+    else{
+        steer.write(90);
+    }
   }
-  else if (Bu1 == HIGH) { // run fwd
-    run_motors(speed, FORWARD);
+    
   }
   
-  if (ch1 < 1400 ) {
-    run_motors(speed, BACKWARD);
-  }
-  else if (Bu2 == HIGH) { // run back
-    run_motors(speed, BACKWARD);
-  }
-  else { //run idle
-    motor_off();
-  }
-  
-  if (ch2 < 1800 or ch2 > 1900) {
-    steer.write(180*ch2/2000);
-    servo_time();
-  }
-  
-  else if (analogRead(POTPIN) < 450 or analogRead(POTPIN) > 575) {
-    steer.write(steerval);  // sets the servo position according to the scaled value
-    servo_time();
-  }
+//  else if (analogRead(POTPIN) < 450 or analogRead(POTPIN) > 575) {
+//    steer.write(steerval);  // sets the servo position according to the scaled value
+//    servo_time();
+//  }
+
    
 
   
-
