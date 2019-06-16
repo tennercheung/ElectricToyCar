@@ -28,14 +28,12 @@
 
 #define FORWARD 1
 #define BACKWARD 2
-#define RIGHT 3
-#define LEFT 4
 
 #define CH1 A1
 #define CH2 A2
 #define POTPIN A0
 
-int speed = 255 / 4 ;
+int speed = 255;
 
 int ch1;
 int ch2;
@@ -47,8 +45,8 @@ Servo steer;  // create servo object to control a servo
 void change_direc (bool direct) {
   if ((direct == HIGH || direct == LOW)) {
 
-    digitalWrite(IN1, !direct);
-    digitalWrite(IN2, direct);
+    digitalWrite(IN1, direct);
+    digitalWrite(IN2, !direct);
     digitalWrite(IN3, !direct);
     digitalWrite(IN4, direct);
   }
@@ -110,7 +108,6 @@ void loop() {
   boolean Bu2 = digitalRead(B2_PIN);
 
   ch1 = pulseIn(CH1, HIGH, 25000);
-
   delay(12);  ch2 = pulseIn(CH2, HIGH, 25000);
 
   int steermap = map((analogRead(POTPIN)), 0, 1023, 0, 180); // scale it to use it with the servo (value between 0 and 180)
@@ -129,7 +126,7 @@ void loop() {
   //      run_motors(speed, FORWARD);
   //    }
 
-  else if (ch2 < 1400 and ch2 !=0) {
+  else if (ch2 < 1400 and ch2 != 0) {
     run_motors(speed, BACKWARD);
   }
   //    else if (Bu2 == HIGH) { // run back
