@@ -38,9 +38,6 @@ int speed = 75;
 int ch1;
 int ch2;
 
-boolean Bu1 = digitalRead(BU1);
-boolean Bu2 = digitalRead(BU2);
-
 int steerval;    // variable to read the value from the analog pin
 
 Servo steer;  // create servo object to control a servo
@@ -78,7 +75,7 @@ void motor_off () {
 }
 
 void setup() {
-  Serial.begin(9600); // Pour a bowl of Serial
+  Serial.begin(115200); // Pour a bowl of Serial
 
   pinMode(IN1, OUTPUT);
   pinMode(IN2, OUTPUT);
@@ -100,15 +97,14 @@ void setup() {
 
 void loop() {
 
-
+  boolean Bu1 = digitalRead(BU1);
+  boolean Bu2 = digitalRead(BU2);
 
   ch1 = pulseIn(CH1, HIGH, 25000);
   delay(12);  ch2 = pulseIn(CH2, HIGH, 25000);
 
   int steermap = map((analogRead(POTPIN)), 0, 1023, 0, 180); // scale it to use it with the servo (value between 0 and 180)
   steerval = analogRead(POTPIN);
-  //  Serial.print("Bu1:");Serial.print(Bu1);
-  //  Serial.print("  Bu2:");Serial.println(Bu2);
 
   //  Serial.print("Chan 1:"); Serial.print(ch1);
   //  Serial.print("  Chan 2:"); Serial.println(ch2);
@@ -117,13 +113,12 @@ void loop() {
   if (ch2 > 2010) {
     run_motors(speed, FORWARD);
   }
-  else if ( (Bu1 == LOW) and (Bu2 == HIGH) ) { // run fwd
-    run_motors(speed, FORWARD);
+  else if (ch2 < 1400 and ch2 != 0) {
+    run_motors(speed, BACKWARD);
   }
 
-
-  if (ch2 < 1400 and ch2 != 0) {
-    run_motors(speed, BACKWARD);
+  else if ( (Bu1 == LOW) and (Bu2 == HIGH) ) { // run fwd
+    run_motors(speed, FORWARD);
   }
   else if ( (Bu2 == LOW) and (Bu1 == HIGH) ) { // run back
     run_motors(speed, BACKWARD);
