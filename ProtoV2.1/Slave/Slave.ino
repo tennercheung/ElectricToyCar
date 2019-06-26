@@ -3,14 +3,14 @@
 #define STEER 6
 
 #define steerIN A3
-#define posHome 90
+#define posHome 80
 #define posLeft 60
-#define posRight 120
-
+#define posRight 100
+//50, 110
 Servo steer;
 boolean steerCheck[3] = {true, false, true};
 int analogNum;
-
+int currentSteer;
 void setup() {
   Serial.begin(115200); // Pour a bowl of Serial
 
@@ -20,6 +20,8 @@ void setup() {
 
 void loop() {
   analogNum = analogRead(steerIN);
+  currentSteer = steer.read();
+  Serial.println(currentSteer);
   Serial.println(analogNum);
   if (analogNum > 500) {
     steerCheck[2] = steerCheck[1];
@@ -33,12 +35,28 @@ void loop() {
     steerCheck[0] = false;
   }
   if (steerCheck[0] == true and steerCheck[1] == true and steerCheck[2] == true) {
-    steer.write(posRight);
+    if (currentSteer < posRight){
+      steer.write(currentSteer + 1);
+    }
+    else if (currentSteer > posRight){
+      steer.write(currentSteer - 1);
+    }
+    
   }
   else if (steerCheck[0] == false and steerCheck[1] == false and steerCheck[2] == false) {
-    steer.write(posLeft);
+    if (currentSteer > posLeft){
+      steer.write(currentSteer - 1);
+    }
+    else if (currentSteer < posLeft){
+      steer.write(currentSteer + 1);
+    }
   }
   else {
-    steer.write(posHome);
+    if (currentSteer > posHome){
+      steer.write(currentSteer - 1);
+    }
+    else if (currentSteer < posHome){
+      steer.write(currentSteer + 1);
+    }
   }
 }

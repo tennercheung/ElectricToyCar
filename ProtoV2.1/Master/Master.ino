@@ -75,8 +75,13 @@
 #define FORWARD 1
 #define BACKWARD 2
 
+#define LEFT 3
+#define RIGHT 4
+#define CENTRE 5
+#define LEFTBWD 6
+#define RIGHTBWD 7
 int speed = 50;
-
+int turnDirection;
 int ch1;
 int ch2;
 
@@ -99,18 +104,41 @@ void change_direc (bool direct) {
 }
 
 void run_motors (int speed, int direc) {
-  analogWrite(EN1, speed);
-  analogWrite(EN2, speed);
+  
 
   if (direc == 1) {
+    analogWrite(EN1, speed);
+    analogWrite(EN2, speed);
     Serial.println("  fwd active  ");
-    change_direc(LOW); //forward //high
+    change_direc(HIGH); //forward //high
   }
 
   else if (direc == 2) {
+    analogWrite(EN1, speed);
+    analogWrite(EN2, speed);
     Serial.println("  bwd active  ");
-    change_direc(HIGH); //backward //low
+    change_direc(LOW); //backward //low
 
+  }
+  else if (direc == 3) {
+    analogWrite(EN1, speed*1.25);
+    analogWrite(EN2, speed*0.75);
+    change_direc(HIGH);
+  }
+  else if (direc == 4) {
+    analogWrite(EN1, speed*0.75);
+    analogWrite(EN2, speed*1.25);
+    change_direc(HIGH);
+  }
+  else if (direc == 6){
+    analogWrite(EN1, speed*0.75);
+    analogWrite(EN2, speed*1.25);
+    change_direc(LOW);
+  }
+  else if (direc == 7){
+    analogWrite(EN1, speed*1.25);
+    analogWrite(EN2, speed*0.75);
+    change_direc(LOW);
   }
 }
 
@@ -150,54 +178,73 @@ void loop() {
 
   raw = analogRead(steerPin);
 
-  if (ch2 > 2010) {
-    run_motors(speed, FORWARD);
+
+
+//  if (raw) {
+//    buffer = raw * Vin;
+//    Vout = (buffer) / 1024.0;
+//    buffer = (Vin / Vout) - 1;
+//    R2 = R1 * buffer;
+//  }
+
+  if (ch1 > 2000) {
+    analogWrite(steerOUT, 255);
+    turnDirection = RIGHT;
+  }
+  else if (ch1 < 1470 and ch1 != 0) {
+    analogWrite(steerOUT, 0);
+    turnDirection = LEFT;
+  }
+//  else if (R2 > 6600){
+//    analogWrite(steerOUT, 255);
+//  }
+//  else if (R2 < 4200){
+//    analogWrite(steerOUT, 0);
+//  }
+  else {
+    analogWrite(steerOUT, 120);
+    turnDirection = CENTRE;
+  }
+//
+//  if (R2 >= 5600 and R2 < 6600) {
+//    analogWrite(3, 0);
+//    digitalWrite(2, HIGH);
+//    digitalWrite(4, LOW);
+//  }
+//  else if (R2 < 5600 and R2 > 4200) {
+//    analogWrite(3, 0);
+//    digitalWrite(2, LOW);
+//    digitalWrite(4, HIGH);
+//  }
+//
+//  else {
+//    analogWrite(3, 255);
+//  }
+
+    if (ch2 > 2010) {
+      if (turnDirection == LEFT){
+        run_motors(speed, LEFT);
+      }
+      else if (turnDirection == RIGHT){
+        run_motors(speed, RIGHT);
+      }
+      else if (turnDirection == CENTRE){
+        run_motors(speed, FORWARD);
+      }
   }
   else if (ch2 < 1400 and ch2 != 0) {
-    run_motors(speed, BACKWARD);
+      if (turnDirection == LEFT){
+        run_motors(speed, RIGHTBWD);
+      }
+      else if (turnDirection == RIGHT){
+        run_motors(speed, LEFTBWD);
+      }
+      else if (turnDirection == CENTRE){
+        run_motors(speed, BACKWARD);
+      }
   }
 
   else { //run idle
     motor_off();
   }
-
-  if (raw) {
-    buffer = raw * Vin;
-    Vout = (buffer) / 1024.0;
-    buffer = (Vin / Vout) - 1;
-    R2 = R1 * buffer;
-  }
-
-  if (ch1 > 2000) {
-    analogWrite(steerOUT, 255);
-  }
-  else if (ch1 < 1470 and ch1 != 0) {
-    analogWrite(steerOUT, 0);
-  }
-  else if (R2 > 6600){
-    analogWrite(steerOUT, 255);
-  }
-  else if (R2 < 4200){
-    analogWrite(steerOUT, 0);
-  }
-  else {
-    analogWrite(steerOUT, 120);
-  }
-
-  if (R2 >= 5600 and R2 < 6600) {
-    analogWrite(3, 0);
-    digitalWrite(2, HIGH);
-    digitalWrite(4, LOW);
-  }
-  else if (R2 < 5600 and R2 > 4200) {
-    analogWrite(3, 0);
-    digitalWrite(2, LOW);
-    digitalWrite(4, HIGH);
-  }
-
-  else {
-    analogWrite(3, 255);
-  }
-
 }
-
