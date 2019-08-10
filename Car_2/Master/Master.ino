@@ -109,14 +109,15 @@ void setup()
 void loop() {
   ch2 = pulseIn(CH2, HIGH, 25000);
   Serial.println(ch2);
+  // centre = 1481/1487
+  
 
-
-  if (ch2 >= 1450) {
+  if (ch2 >= 1580) {
 
       run_motors(speed, FORWARD);
 
   }
-  else if (ch2 <= 1190 and ch2 != 0) {
+  else if (ch2 <= 1309 and ch2 != 0) {
 
       run_motors(speed, BACKWARD);
 
