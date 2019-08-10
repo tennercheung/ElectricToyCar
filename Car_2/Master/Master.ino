@@ -1,12 +1,8 @@
 
 /*
 
-  M1:
-  IN1 = 8, IN2 = 9
-  EN1 = 6
-  M2:
-  EN2 = 11
-  IN3 = 10, IN4 = 7
+  Master for Car 2
+
 */
 
 //M1:
@@ -47,7 +43,7 @@ void change_direc (bool direct) {
 }
 
 void run_motors (int speed, int direc) {
-  
+
 
   if (direc == 1) {
     analogWrite(EN1, speed);
@@ -64,23 +60,23 @@ void run_motors (int speed, int direc) {
 
   }
   else if (direc == 3) {
-    analogWrite(EN1, speed*1.25);
-    analogWrite(EN2, speed*0.75);
+    analogWrite(EN1, speed * 1.25);
+    analogWrite(EN2, speed * 0.75);
     change_direc(HIGH);
   }
   else if (direc == 4) {
-    analogWrite(EN1, speed*0.75);
-    analogWrite(EN2, speed*1.25);
+    analogWrite(EN1, speed * 0.75);
+    analogWrite(EN2, speed * 1.25);
     change_direc(HIGH);
   }
-  else if (direc == 6){
-    analogWrite(EN1, speed*0.75);
-    analogWrite(EN2, speed*1.25);
+  else if (direc == 6) {
+    analogWrite(EN1, speed * 0.75);
+    analogWrite(EN2, speed * 1.25);
     change_direc(LOW);
   }
-  else if (direc == 7){
-    analogWrite(EN1, speed*1.25);
-    analogWrite(EN2, speed*0.75);
+  else if (direc == 7) {
+    analogWrite(EN1, speed * 1.25);
+    analogWrite(EN2, speed * 0.75);
     change_direc(LOW);
   }
 }
@@ -94,9 +90,7 @@ void motor_off () {
 void setup()
 {
   Serial.begin(115200);
-  pinMode(2, OUTPUT);
-  pinMode(3, OUTPUT);
-  pinMode(4, OUTPUT);
+
 
   pinMode(IN1, OUTPUT);
   pinMode(IN2, OUTPUT);
@@ -117,27 +111,15 @@ void loop() {
   Serial.println(ch2);
 
 
-    if (ch2 >= 1450) {
-      if (turnDirection == LEFT){
-        run_motors(speed, LEFT);
-      }
-      else if (turnDirection == RIGHT){
-        run_motors(speed, RIGHT);
-      }
-      else if (turnDirection == CENTRE){
-        run_motors(speed, FORWARD);
-      }
+  if (ch2 >= 1450) {
+
+      run_motors(speed, FORWARD);
+
   }
   else if (ch2 <= 1190 and ch2 != 0) {
-      if (turnDirection == LEFT){
-        run_motors(speed, RIGHTBWD);
-      }
-      else if (turnDirection == RIGHT){
-        run_motors(speed, LEFTBWD);
-      }
-      else if (turnDirection == CENTRE){
-        run_motors(speed, BACKWARD);
-      }
+
+      run_motors(speed, BACKWARD);
+
   }
 
   else { //run idle
