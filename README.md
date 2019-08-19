@@ -1,15 +1,6 @@
 # ElectricToyCar
 
-## Schematics
-
-Motors
-![Alt Text](https://github.com/tennercheung/ElectricToyCar/blob/master/Schematics/Motors.jpg)
-![Alt Text](https://github.com/tennercheung/ElectricToyCar/blob/master/Schematics/Motor_close_up.jpg)
-Dashboard PCB
-![Alt Text](https://github.com/tennercheung/ElectricToyCar/blob/master/Schematics/Dash_zoomed.jpg)
-![Alt Text](https://github.com/tennercheung/ElectricToyCar/blob/master/Schematics/Dash.jpg)
-![Alt Text](https://github.com/tennercheung/ElectricToyCar/blob/master/Schematics/Dash2.jpg)
-
+# (Car 1)
 ## ProtoV1
 
 Code implemented with intent to test control with IR and on-board user controls of the vehicle
@@ -39,8 +30,23 @@ Encountered Issues:
 * Small servo jitters when RC is shut off
 * Small detail, hidden speed control switch can be implemented as a small feature incase client wants to increase the speed of the car
 
-## ProtoV1 (Car 2)
-Encountered Issues:
+# (Car 2)
+## ProtoV1 
+Encountered Issues: N/A
+
+## Pedal Signal Analysis
+![Alt Text](https://github.com/tennercheung/ElectricToyCar/blob/master/Car_2/Pedal_Signal/on_oscillo.jpg)
+
+## Schematics
+
+Motors
+![Alt Text](https://github.com/tennercheung/ElectricToyCar/blob/master/Schematics/Motors.jpg)
+![Alt Text](https://github.com/tennercheung/ElectricToyCar/blob/master/Schematics/Motor_close_up.jpg)
+Dashboard PCB
+![Alt Text](https://github.com/tennercheung/ElectricToyCar/blob/master/Schematics/Dash_zoomed.jpg)
+![Alt Text](https://github.com/tennercheung/ElectricToyCar/blob/master/Schematics/Dash.jpg)
+![Alt Text](https://github.com/tennercheung/ElectricToyCar/blob/master/Schematics/Dash2.jpg)
+
 
 ## Useful Links:
 * 7A/160W L298 Motor Board (https://amzn.to/2WCc6RT)
