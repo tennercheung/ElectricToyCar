@@ -6,15 +6,15 @@
 */
 
 //M1:
+#define EN1 6
 #define IN1 8
 #define IN2 9
-#define EN1 6
+
 
 //M2:
+#define EN2 11
 #define IN3 10
 #define IN4 7
-#define EN2 11
-
 
 #define CH2 A2
 
@@ -26,6 +26,7 @@
 #define CENTRE 5
 #define LEFTBWD 6
 #define RIGHTBWD 7
+
 int speed = 50;
 int turnDirection;
 
@@ -102,7 +103,6 @@ void setup()
 
 
   pinMode(CH2, INPUT);
-
 
 }
 

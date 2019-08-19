@@ -1,4 +1,4 @@
-﻿# ElectricToyCar
+# ElectricToyCar
 
 ## Schematics
 
@@ -39,8 +39,11 @@ Encountered Issues:
 * Small servo jitters when RC is shut off
 * Small detail, hidden speed control switch can be implemented as a small feature incase client wants to increase the speed of the car
 
+## ProtoV1 (Car 2)
+Encountered Issues:
+
 ## Useful Links:
 * 7A/160W L298 Motor Board (https://amzn.to/2WCc6RT)
-* LM2596 DC-DC Step Down Buck Converter(https://bit.ly/2JCi5m3)
+* Tesla Club Forum (https://bit.ly/2KY1rN8)
 
 
