@@ -39,8 +39,8 @@ Oscilloscope
 ![Alt Text](https://github.com/tennercheung/ElectricToyCar/blob/master/Car_2/Pedal_Signal/on_oscillo.jpg)
 
 Serial Plotter
-![Alt Text](https://github.com/tennercheung/ElectricToyCar/blob/master/Car_2/Pedal_Signal/pedsig_start.png)
-![Alt Text](https://github.com/tennercheung/ElectricToyCar/blob/master/Car_2/Pedal_Signal/pedsig_end.png)
+![Alt Text](https://github.com/tennercheung/ElectricToyCar/blob/master/Car_2/Pedal_Signal/pedsig_start.jpg)
+![Alt Text](https://github.com/tennercheung/ElectricToyCar/blob/master/Car_2/Pedal_Signal/pedsig_end.jpg)
 
 ## Schematics
 
