@@ -23,8 +23,8 @@ Encountered Issues:
 ## ProtoV2
 
 Encountered Issues:
-* Arduino must be off to send serial output to battery
-* Battery has automatic shut off when pedal switch has not been pressed for longer than ~10 minutes
+* Arduino must be **off** to send serial output to battery
+* Battery has automatic shut off when pedal switch has not been pressed for longer than ~***10 minutes***
 * When starting up the car, pedal switch is to be pressed first while the switch for power to the Arduino and H-Bridge (Red Switch on the back of the car) is off.
 * 60kg servo does not function with the Arduino library, but works if it connects to the RC receiver
 * Small servo jitters when RC is shut off
