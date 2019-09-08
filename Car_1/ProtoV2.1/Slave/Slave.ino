@@ -41,6 +41,9 @@ void loop() {
     else if (currentSteer > posRight){
       steer.write(currentSteer - 1);
     }
+    else if (currentSteer == posRight){
+      steer.write(currentSteer);
+    }
     
   }
   else if (steerCheck[0] == false and steerCheck[1] == false and steerCheck[2] == false) {
@@ -49,6 +52,9 @@ void loop() {
     }
     else if (currentSteer < posLeft){
       steer.write(currentSteer + 1);
+    }
+    else if(currentSteer == posLeft){
+      steer.write(currentSteer);
     }
   }
   else {
