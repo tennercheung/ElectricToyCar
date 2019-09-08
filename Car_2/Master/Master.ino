@@ -112,14 +112,14 @@ void loop() {
   // centre = 1481/1487
   
 
-  if (ch2 >= 1580) {
-
-      run_motors(speed, FORWARD);
-
-  }
-  else if (ch2 <= 1309 and ch2 != 0) {
+  if (ch2 >= 1750) {
 
       run_motors(speed, BACKWARD);
+
+  }
+  else if (ch2 <= 1250 and ch2 != 0) {
+
+      run_motors(speed, FORWARD);
 
   }
 
