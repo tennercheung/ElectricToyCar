@@ -56,4 +56,12 @@ Dashboard PCB
 * 7A/160W L298 Motor Board (https://amzn.to/2WCc6RT)
 * Tesla Club Forum (https://bit.ly/2KY1rN8)
 
+## Outline
+
+1. Disassembled car by removing unnecessary wires in the dashboard and the pedal switch. **Black serial wire should be left untouched**.
+2. Disconneted connectors from the motors and batteries. Used quick connects on 14 AWG wire, with a crimpping tool, to connect motor connectors to L298 Motor Board. Parallel connections are made from battery connectors to split power supply to pedal switch and to Vin of L298 Motor Board and Buck Converter. 
+3. Modified switch that originally controlled the speed of the car to act as an on/off switch. Added a second parallel connection at the point before the Vin of the Buck Converter and Motor Board. *Refer to diagrams for parallel connections and on/off switch hookup*.
+4. Implemented ciruit on Arduino Shield(s) (Car 1 has two Arduino Boards, Car 2 has one). For Car 1, Buck Converter has Vout split into parallel to supply power for both Arduinos. 
+5. Mounted Arduino(s), Buck Converter, and L298 Motor Board in front storage compartment with M3 screws and stand-off spacers, drilled in holes through the bottom of the car for a nut to be attached on the spacers. Cut a hole for power supply wires to be routed inside the side of the car. 
+6. On the bottom of the car two holes were drilled for the steering linkage and servo. Servo horn and steering linkage are secured with lock nuts.
 
