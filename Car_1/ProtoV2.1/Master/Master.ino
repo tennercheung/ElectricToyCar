@@ -163,20 +163,20 @@ void setup()
   pinMode(IN4, OUTPUT);
   pinMode(EN2, OUTPUT);
 
-  pinMode(CH1, INPUT);
+  //pinMode(CH1, INPUT);
   pinMode(CH2, INPUT);
 
   pinMode(steerOUT, OUTPUT);
 }
 
 void loop() {
-  ch1 = pulseIn(CH1, HIGH, 25000);
+//  ch1 = pulseIn(CH1, HIGH, 25000);
   delay(12);  ch2 = pulseIn(CH2, HIGH, 25000);
 
-  int steermap = map((analogRead(steerPin)), 0, 1023, 0, 180);
-  steerval = analogRead(steerPin);
+//  int steermap = map((analogRead(steerPin)), 0, 1023, 0, 180);
+//  steerval = analogRead(steerPin);
 
-  raw = analogRead(steerPin);
+//  raw = analogRead(steerPin);
 
 
 
